@@ -38,7 +38,7 @@ The script will perform the following tasks:
 
 ```bash
 
-python3 PdfQueryLangchain.ipynb
+python3 PdfQueryLangchain.py
 
 ```
 
