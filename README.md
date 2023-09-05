@@ -7,6 +7,7 @@ This project is designed to extract and process information from a medical PDF d
 - [Introduction](#introduction)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Output](#output)
 
 ## Introduction
 
@@ -41,14 +42,15 @@ python3 PdfQueryLangchain.ipynb
 
 ```
 
-1. Read the text content from the provided PDF file.
-2. Split the text into smaller chunks and calculate embeddings.
-3. Create a document search instance using FAISS.
-4. Process a list of queries based on the document content and store the results in a JSON file named "patient_info.json".
-5. The JSON output will contain information related to the patient's chief complaint, treatment plan, allergies, medications, and answers to specific medical questions.
+The script will perform the following tasks:
 
+1. Extract text from the PDF document(s).
+2. Split the text into manageable chunks and calculate embeddings.
+3. Create a document search instance using FAISS.
+4. Process a list of predefined queries to extract specific information.
+5. Save the results in a JSON file named patient_info.json.
 Please note that the script introduces a sleep of 5 seconds between queries to avoid making requests too quickly. You can adjust this sleep time as needed.
 
 
-Output
+## Output
 The final output of the script will be a JSON object with appropriate structure to represent the extracted information and answers to the medical questions.
