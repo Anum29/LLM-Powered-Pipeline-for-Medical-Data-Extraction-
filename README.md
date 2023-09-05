@@ -1,4 +1,4 @@
-# LLM-Powered-Pipeline-for-Medical-Data-Extraction-
+# LLM-Powered-Pipeline-for-Medical-Data-Extraction
 This project is designed to extract and process information from a medical PDF document, answer specific medical-related questions based on the document content, and provide a JSON output. The project utilizes the OpenAI GPT-3.5 model, Langchain for text processing, and PyPDF2 for reading PDF files.
 
 
