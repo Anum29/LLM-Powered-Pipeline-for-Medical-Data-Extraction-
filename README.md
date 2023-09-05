@@ -22,6 +22,7 @@ You also need to install the required Python packages by running:
 
 ```shell
 pip3 install -r requirements.txt
+```
 
 ## Usage
 1. Replace the "medical-record.pdf" with the path to the PDF file you want to process.
