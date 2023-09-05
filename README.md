@@ -21,7 +21,9 @@ Before running the script, make sure you have the following prerequisites instal
 You also need to install the required Python packages by running:
 
 ```shell
+
 pip3 install -r requirements.txt
+
 ```
 
 ## Usage
@@ -32,8 +34,11 @@ pip3 install -r requirements.txt
 3. Run the script using Python:
 
 The script will perform the following tasks:
+
 ```bash
+
 python3 PdfQueryLangchain.ipynb
+
 ```
 
 1. Read the text content from the provided PDF file.
