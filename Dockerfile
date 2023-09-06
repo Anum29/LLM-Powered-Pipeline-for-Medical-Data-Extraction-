@@ -17,4 +17,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 # EXPOSE 80
 
 # Define the command to run your script
-CMD ["python", "PdfQueryLangchain.py"]
+CMD ["python", "pdf_query_langchain.py"]
