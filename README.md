@@ -54,10 +54,12 @@ Please note that the script introduces a sleep of 5 seconds between queries to a
 
 #### Running through docker
 To run using the docker:
-
+```bash
+docker build -t pdf-query-langchain
+```
 
 ```bash
-docker run -e OPENAI_API_KEY=YOUR_OPENAI_API_KEY my-pdf-query-app
+docker run -e OPENAI_API_KEY=YOUR_API_KEY pdf-query-langchain
 ```
 
 
