@@ -49,7 +49,7 @@ if uploaded_file is not None:
 
 # Set APIkey for OpenAI Service
 # Can sub this out for other LLM providers
-os.environ['OPENAI_API_KEY'] = 
+os.environ['OPENAI_API_KEY'] = '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'
 
 # Create instance of OpenAI LLM
 llm = OpenAI(temperature=0.1, verbose=True)
