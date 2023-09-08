@@ -52,7 +52,7 @@ The script will perform the following tasks:
 5. Save the results in a JSON file named patient_info.json.
 Please note that the script introduces a sleep of 5 seconds between queries to avoid making requests too quickly. You can adjust this sleep time as needed.
 
-#### Running through docker
+### Running through docker
 To run using the docker:
 ```bash
 docker build -t pdf-query-langchain
