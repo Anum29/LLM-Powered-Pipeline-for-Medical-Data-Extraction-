@@ -28,6 +28,7 @@ pip3 install -r requirements.txt
 ```
 
 ## Usage
+### Running through python script
 1. Replace the "medical-record.pdf" with the path to the PDF file you want to process.
 
 2. Set your OpenAI API key by replacing the placeholder value 'sk-XXX in the OPENAI_API_KEY variable with your actual API key.
@@ -50,6 +51,14 @@ The script will perform the following tasks:
 4. Process a list of predefined queries to extract specific information.
 5. Save the results in a JSON file named patient_info.json.
 Please note that the script introduces a sleep of 5 seconds between queries to avoid making requests too quickly. You can adjust this sleep time as needed.
+
+#### Running through docker
+To run using the docker:
+
+
+```bash
+docker run -e OPENAI_API_KEY=YOUR_OPENAI_API_KEY my-pdf-query-app
+```
 
 
 ## Output
