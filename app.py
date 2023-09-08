@@ -1,4 +1,4 @@
-!pip3 install -r requirements.txt
+! pip3 install -r requirements.txt
 
 import tempfile
 from PIL import Image
