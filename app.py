@@ -1,6 +1,7 @@
 import tempfile
 from PIL import Image
 import os
+import streamlit as st
 
 # Set the title and subtitle of the app
 st.title('🦜🔗 PDF-Chat: Interact with Your PDFs in a Conversational Way')
