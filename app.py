@@ -2,18 +2,6 @@ import tempfile
 from PIL import Image
 import os
 
-
-from langchain.llms import OpenAI
-from langchain.embeddings import OpenAIEmbeddings
-import streamlit as st
-from langchain.document_loaders import PyPDFLoader
-from langchain.vectorstores import Chroma
-from langchain.agents.agent_toolkits import (
-    create_vectorstore_agent,
-    VectorStoreToolkit,
-    VectorStoreInfo
-)
-
 # Set the title and subtitle of the app
 st.title('🦜🔗 PDF-Chat: Interact with Your PDFs in a Conversational Way')
 st.subheader('Load your PDF, ask questions, and receive answers directly from the document.')
