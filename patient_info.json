@@ -1,0 +1,14 @@
+{
+    "Chief Complaint": " Hemorrhoids",
+    "Treatment Plan": " - Refer for colonoscopy - Start Clenpiq 10 mg-3.5 gram-12 gram/160 ml oral solution as directed - Apply diclofenac 1% topical gel to affected area four times a day - Take meloxicam 15 mg tablet by mouth once daily - Monitor for any signs of infection or perforation - Increase patient's level of exercise and encourage a healthier diet - Refer to psychiatrist for assessment of stress levels - Start using contraception - Routinely use seatbelt or car seat - Provide patient with information on support system and domestic violence - Provide patient with information on gender identity and LGBTQ",
+    "Allergies": " None",
+    "Medications": {
+        "1": "Clenpiq 10 mg-3.5 gram-12 gram/160 ml oral solution - Take 320 ml by oral route as directed - Possible side-effects include nausea, vomiting, and diarrhea.",
+        "2": "Diclofenac 1 % topical gel - Apply 2 grams to the affected area(s) topically four times a day - Possible side-effects include skin irritation, burning, and dryness.",
+        "3": "Meloxicam 15 mg tablet - Take one tablet by mouth one time daily - Possible side-effects include nausea, vomiting, headache, and dizziness."
+    },
+    "Family history of hypertension": " Yes",
+    "Family history of colon cancer": " Yes",
+    "Red blood per rectum": " No",
+    "Comment on treatment plan": " Yes, the treatment plan is correct according to clinical accuracy. The patient has been given Clenpiq for screening for malignant neoplasm of the colon, and the family history of colon cancer has been noted by the Z80.0 diagnosis code. The patient has also been advised to seek evaluation for banding procedure after colonoscopy, which is appropriate given the patient's history of red blood cell per rectum."
+}
