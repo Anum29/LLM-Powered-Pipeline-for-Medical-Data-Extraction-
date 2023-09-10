@@ -62,6 +62,17 @@ docker build -t pdf-query-langchain
 docker run -e OPENAI_API_KEY=YOUR_API_KEY pdf-query-langchain
 ```
 
+#### Build the Docker image
+```bash
+docker build -t my-python-app .
+```
+
+
+#### Run the Docker container with the secret environment variable
+```bash
+docker run -e SECRET_VARIABLE="MySecretValue" my-python-app
+```
+
 
 ## Output
 The final output of the script will be a JSON object with appropriate structure to represent the extracted information and answers to the medical questions.
