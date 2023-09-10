@@ -19,28 +19,46 @@ Before running the script, make sure you have the following prerequisites instal
 
 - Python 3.x
 - pip3
-You also need to install the required Python packages by running:
 
-```shell
-
-pip3 install -r requirements.txt
-
-```
 
 ## Usage
-### Running through python script
-1. Replace the "medical-record.pdf" with the path to the PDF file you want to process.
 
-2. Set your OpenAI API key by replacing the placeholder value 'sk-XXX in the OPENAI_API_KEY variable with your actual API key.
+Replace the "medical-record.pdf" with the path to the PDF file you want to process.
 
-3. Run the script using Python:
 
-The script will perform the following tasks:
+### Steps to run directly the python code
+Within the `main.py` file, set your OpenAI API key by replacing the placeholder value 'sk-XXX in the OPENAI_API_KEY variable with your actual API key.
 
+It's highly recommended to install the (empty) dependencies in a virtual environment.
+
+- Creating the virtual environment: 
 ```bash
+virtualenv venv
+```
 
-python3 pdf_query_langchain.py
+- Activatingv the virtual environment:
+```bash
+source venv/bin/activate
+```
+- Installing dependencies:
+```bash
+pip3 install -r requirements.txt
+```
+- Running the code:
+```bash
+python3 main.py
+```
 
+### Steps to run the python code withing a Docker container
+
+- Build the image:
+```bash
+docker build -t docker-llm-data-pipeline:lastest
+```
+
+- Run the Docker container with the secret environment variable:
+```bash
+docker run -e OPENAI_API_KEY="YOUR_API_KEY" docker-llm-data-pipeline
 ```
 
 The script will perform the following tasks:
@@ -51,27 +69,6 @@ The script will perform the following tasks:
 4. Process a list of predefined queries to extract specific information.
 5. Save the results in a JSON file named patient_info.json.
 Please note that the script introduces a sleep of 5 seconds between queries to avoid making requests too quickly. You can adjust this sleep time as needed.
-
-### Running through docker
-To run using the docker:
-```bash
-docker build -t pdf-query-langchain
-```
-
-```bash
-docker run -e OPENAI_API_KEY=YOUR_API_KEY pdf-query-langchain
-```
-
-#### Build the Docker image
-```bash
-docker build -t my-python-app .
-```
-
-
-#### Run the Docker container with the secret environment variable
-```bash
-docker run -e SECRET_VARIABLE="MySecretValue" my-python-app
-```
 
 
 ## Output
