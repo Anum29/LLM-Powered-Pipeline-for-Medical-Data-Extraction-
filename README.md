@@ -53,12 +53,12 @@ python3 main.py
 
 - Build the image:
 ```bash
-docker build -t docker-llm-data-pipeline .
+docker build -t docker-llm-data-pipeline:latest .
 ```
 
 - Run the Docker container with the secret environment variable:
 ```bash
-docker run -e OPENAI_API_KEY="YOUR_API_KEY" docker-llm-data-pipeline
+docker run -e OPENAI_API_KEY="YOUR_API_KEY" docker-llm-data-pipeline:latest
 ```
 
 The script will perform the following tasks:
