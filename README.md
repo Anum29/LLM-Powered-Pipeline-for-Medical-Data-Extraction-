@@ -53,7 +53,7 @@ python3 main.py
 
 - Build the image:
 ```bash
-docker build -t docker-llm-data-pipeline:lastest
+docker build -t docker-llm-data-pipeline .
 ```
 
 - Run the Docker container with the secret environment variable:
