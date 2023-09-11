@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""LLM Powered Pipeline for Medical Data Extraction.ipynb
+"""LLM Powered Pipeline for Medical Data Extraction
 """
 
 
@@ -19,9 +19,11 @@ from langchain.llms import OpenAI
 from typing_extensions import Concatenate
 
 OPENAI_MODEL = "gpt-3.5-turbo"
-OPENAI_API_KEY = 'Your API key"
+#OPENAI_API_KEY =  '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'
 
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+#os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+os.environ["OPENAI_API_KEY"] = os.getenv('OPENAI_API_KEY')
+
 
 def read_pdf(pdfreader):
     """
@@ -247,6 +249,7 @@ def query_rewriting(queries):
     return rewritten_queries
 
 if __name__ == '__main__':
+
     # provide the path of  pdf file/files.
     pdfreader = PdfReader('medical-record.pdf')
     raw_text = read_pdf(pdfreader)
