@@ -9,10 +9,6 @@ This project is designed to extract and process information from a medical PDF d
 - [Usage](#usage)
 - [Output](#output)
 
-## Introduction
-
-Provide a brief introduction to your project. Explain what it does and why it's useful or interesting.
-
 ## Installation
 
 Before running the script, make sure you have the following prerequisites installed:
