@@ -17,7 +17,7 @@ Provide a brief introduction to your project. Explain what it does and why it's 
 
 Before running the script, make sure you have the following prerequisites installed:
 
-- Python 3.x
+- Python 3.8x
 - pip3
 
 
