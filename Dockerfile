@@ -1,9 +1,14 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+FROM python:3.10
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Add requirements file in the container
+COPY requirements.txt ./requirements.txt
+RUN pip3 install -r requirements.txt
 
-ADD pdf_query_langchain.py 
+# Add source code in the container
+COPY main.py ./main.py
 
-ENTRYPOINT [ "python", "./pdf_query_langchain.py"]
+# Set the secret environment variable
+ENV OPENAI_API_KEY="YOUR_API_KEY"
+
+# Define container entry point
+ENTRYPOINT ["python", "main.py"]
