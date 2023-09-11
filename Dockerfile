@@ -10,7 +10,6 @@ COPY main.py ./main.py
 # Add pdf in the container
 COPY medical-record.pdf ./medical-record.pdf
 
-
 # Set the secret environment variable
 ENV OPENAI_API_KEY="YOUR_API_KEY"
 
