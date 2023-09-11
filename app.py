@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-"""LLM Powered Pipeline for Medical Data Extraction"
+"""LLM Powered Pipeline for Medical Data Extraction.ipynb
 """
+
 
 import os
 import json
 import time
+import string
 
 from PyPDF2 import PdfReader
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -17,7 +19,7 @@ from langchain.llms import OpenAI
 from typing_extensions import Concatenate
 
 OPENAI_MODEL = "gpt-3.5-turbo"
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_API_KEY = 'Your API key"
 
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
@@ -141,96 +143,162 @@ def process_queries(document_search, queries):
 
         # Introduce a sleep to avoid making requests too quickly
         time.sleep(5)  # Sleep for 5 seconds (adjust as needed)
-
-    # Save the results in a JSON file
-    with open("patient_info.json", "w") as json_file:
-        json.dump(results, json_file, indent=4)
-
-    print("Patient information has been retrieved and saved in 'patient_info.json'.")
     return results
 
-def generate_justifications_and_confidence(document_text, extracted_data):
+def justification_and_confidence_score(data_dict, document_text):
     """
-    Generate justifications and confidence scores for each answer based on the extracted data.
+    Generate justifications and confidence scores for each answer based on the document text.
 
     Args:
-        document_text (str): The text content of the PDF document.
-        extracted_data (dict): The extracted data in JSON format.
+        data_dict (dict): The dictionary containing answers and their values.
+        document_text (str): The text content of the document.
 
     Returns:
-        dict: A dictionary containing justifications and confidence scores for each answer.
+        dict: A new dictionary with justifications and confidence scores.
     """
-    justifications_and_confidence = {}  # Initialize a dictionary to store results
+    result_dict = {}  # Initialize a dictionary to store results
 
-    for key, answer in extracted_data.items():
+    for key, value in data_dict.items():
+        # Initialize justification and confidence variables
         justification = None
         confidence = None
 
-        # Check if the answer contains "Yes" or "No" for boolean questions
-        if answer.strip().lower() == "yes" or answer.strip().lower() == "no":
-            # If the answer is "Yes" or "No," set high confidence
-            confidence = "10/10"  # High confidence
+        # Convert the value to a string
+        value_str = str(value) + "-" + str(key)
 
-            # Generate justifications for "Yes" or "No" answers based on document content
-            if key == "Family history of hypertension":
-                if "Hypertensive disorder" in document_text:
-                    justification = "Hypertensive disorder is mentioned in the document."
-                else:
-                    justification = "Hypertensive disorder is not explicitly mentioned in the document."
-            elif key == "Family history of colon cancer":
-                if "Colon" in document_text:
-                    justification = "Colon cancer is mentioned in the document."
-                else:
-                    justification = "Colon cancer is not mentioned in the document."
-            elif key == "Red blood per rectum":
-                if "minimal bright red blood per rectum" in document_text:
-                    justification = "There is evidence of minimal bright red blood per rectum in the document."
-                else:
-                    justification = "There is no evidence of minimal bright red blood per rectum in the document."
+        # Convert both the document text and answer to lowercase for case-insensitive comparison
+        document_text_lower = document_text.lower()
+        value_lower = value_str.lower()
 
-        # Store justification and confidence in the results dictionary
-        if justification:
-            justifications_and_confidence[f"{key} Justification"] = justification
-        if confidence:
-            justifications_and_confidence[f"{key} Confidence"] = confidence
+        # Remove punctuation from document text and value
+        translator = str.maketrans('', '', string.punctuation)
+        document_text_cleaned = document_text_lower.translate(translator)
+        value_cleaned = value_lower.translate(translator)
 
-    return justifications_and_confidence
+        # Split the cleaned text into words
+        document_words = set(document_text_cleaned.split())
+        value_words = set(value_cleaned.split())
 
-# provide the path of  pdf file/files.
-pdfreader = PdfReader('medical-record.pdf')
-raw_text = read_pdf(pdfreader)
-texts, embeddings = text_embedding(raw_text)
+        # Calculate the intersection of words
+        common_words = document_words.intersection(value_words)
 
-document_search = search_documents(texts, embeddings)
+        # Determine confidence score based on the number of common words
+        if len(common_words) >= 1:
+            confidence = "10/10"
+        else:
+            confidence = "0"
 
-query = "Patient’s chief complaint in one word"
-query_result(document_search, query)
+        # Generate justification by finding matching text in document_text
+        if len(common_words) > 0:
+            # Find the first matching word
+            matching_word = list(common_words)[0]
 
-# Create query prompts for each piece of information
-queries = {
-    "Chief Complaint": "Patient’s chief complaint in one word",
-    "Treatment Plan": "Suggested treatment plan. Answer in bullets",
-    "Allergies": "A list of allergies",
-    "Medications": "A list of medications the patient is taking, with any known side-effects. Answer in bullets",
-    "Family history of hypertension": "Does the patient have a family history of hypertension?Answer yes or no",
-    "Family history of colon cancer": "Does the patient have a family history of colon cancer? Answer yes or no",
-    "Family history of colon cancer": "Does the patient have a family history of colon cancer? Answer yes or no",
-    "Red blood per rectum" : "Has the patient experienced minimal bright red blood per rectum? Answer yes or no",
-    "Comment on treatment plan":"Is the treatment plan correct according to clinical accuracy? Consider family history of hypertension, colon cancer, red blood cell per rectum"
+            # Find the sentence containing the matching word
+            sentences = document_text.split('.')
+            for sentence in sentences:
+                if matching_word in sentence.lower():
+                    justification = f"The answer '{value_str}' is justified by the following text: '{sentence.strip()}'."
+                    break
 
-}
+        # Create a sub-dictionary for this answer
+        sub_dict = {
+            "Answer": value_str,
+            "Justification": justification,
+            "Confidence": confidence
+        }
 
-result = process_queries(document_search, queries)
+        # Add the sub-dictionary to the result dictionary
+        result_dict[key] = sub_dict
 
-print(result)
+    return result_dict
 
-# Example usage:
-document_text = raw_text
-extracted_data = {
-    "Family history of hypertension": result["Family history of hypertension"],
-    "Family history of colon cancer": result["Family history of colon cancer"],
-    "Red blood per rectum": result["Red blood per rectum"],
-}
+def query_rewriting(queries):
+    """
+    Rewrite the queries according to specified rules and generate a new dictionary.
 
-justifications_and_confidence = generate_justifications_and_confidence(document_text, extracted_data)
-print(justifications_and_confidence)
+    Args:
+        queries (dict): The original dictionary of queries.
+
+    Returns:
+        dict: A new dictionary of rewritten queries.
+    """
+    rewritten_queries = {}  # Initialize a dictionary to store rewritten queries
+
+    for key, query in queries.items():
+        # Initialize a list to store modifications to the query
+        modifications = []
+
+        # Check for specific keywords in the query and apply modifications
+        if "Comment" in query:
+            query = query + ". Elaborate."
+        elif "chief" in query:
+            query = query + " in one word"
+        elif "plan" in query:
+            query = query + ". Answer in bullets"
+        elif "list" in query:
+            query = query + ". Answer in bullets"
+        elif "?" in query:
+            query = query + " Answer yes or no"
+
+
+        # Store the modified query in the new dictionary
+        rewritten_queries[key] = query
+
+    return rewritten_queries
+
+if __name__ == '__main__':
+    # provide the path of  pdf file/files.
+    pdfreader = PdfReader('medical-record.pdf')
+    raw_text = read_pdf(pdfreader)
+    texts, embeddings = text_embedding(raw_text)
+
+    document_search = search_documents(texts, embeddings)
+
+
+    # Original queries
+    queries = {
+        "Chief Complaint": "Patient’s chief complaint",
+        "Treatment Plan": "Suggested treatment plan",
+        "Allergies": "A list of allergies the patient has",
+        "Medications": "A list of medications the patient is taking, with any known side-effects",
+        "Family history of hypertension": "Does the patient have a family history of hypertension?",
+        "Family history of colon cancer": "Does the patient have a family history of colon cancer?",
+        "Family history of colon cancer": "Does the patient have a family history of colon cancer?",
+        "Red blood per rectum" : "Has the patient experienced minimal bright red blood per rectum?",
+        }
+
+    # Rewrite the queries
+    rewritten_queries = query_rewriting(queries)
+
+    # Display the rewritten queries
+    for key, query in rewritten_queries.items():
+        print(f"{key}: {query}")
+
+    result = process_queries(document_search, rewritten_queries)
+
+    # Generate justifications and confidence scores
+    output = justification_and_confidence_score(result, raw_text)
+
+    print(output)
+
+    # Display the results
+    for key, value in output.items():
+        print(f"{key}:")
+        print(f"  Answer: {value['Answer']}")
+        print(f"  Justification: {value['Justification']}")
+        print(f"  Confidence: {value['Confidence']}")
+        print()
+
+
+    query = "Comment on treatment plan. Is the treatment plan correct according to clinical accuracy? Consider family history of hypertension, colon cancer, red blood cell per rectum"
+    query_result(document_search, query)
+
+    result["Comment on treatment plan"] = query_result(document_search, query)
+
+    print(result)
+
+    # Save the results in a JSON file
+    with open("patient_info.json", "w") as json_file:
+      json.dump(result, json_file, indent=4)
+      print("Patient information has been retrieved and saved in 'patient_info.json'.")
+
