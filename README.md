@@ -29,17 +29,6 @@ Replace the "medical-record.pdf" with the path to the PDF file you want to proce
 ### Steps to run directly the python code
 Within the `main.py` file, set your OpenAI API key by replacing the placeholder value 'sk-XXX in the OPENAI_API_KEY variable with your actual API key.
 
-It's highly recommended to install the (empty) dependencies in a virtual environment.
-
-- Creating the virtual environment: 
-```bash
-virtualenv venv
-```
-
-- Activatingv the virtual environment:
-```bash
-source venv/bin/activate
-```
 - Installing dependencies:
 ```bash
 pip3 install -r requirements.txt
