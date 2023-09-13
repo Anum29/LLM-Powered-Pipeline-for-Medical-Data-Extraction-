@@ -19,7 +19,7 @@ from langchain.llms import OpenAI
 from typing_extensions import Concatenate
 
 OPENAI_MODEL = "gpt-3.5-turbo"
-#OPENAI_API_KEY =  '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'
+#OPENAI_API_KEY =  'sk-XXXX' Add your API key here if running script using python
 
 #os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 os.environ["OPENAI_API_KEY"] = os.getenv('OPENAI_API_KEY')
