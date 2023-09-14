@@ -23,15 +23,21 @@ Replace the "medical-record.pdf" with the path to the PDF file you want to proce
 
 
 ### Steps to run directly the python code
-Within the `main.py` file, set your OpenAI API key by replacing the placeholder value 'sk-XXX in the OPENAI_API_KEY variable with your actual API key.
+Within the `main.py` file, set your OpenAI API key by replacing the placeholder value OPENAI_API_KEY variable with your actual API key. Use this link to set the environment variable [here](https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety?ref=blog.streamlit.io)
 
 - Installing dependencies:
 ```bash
 pip3 install -r requirements.txt
 ```
-- Running the code:
+- Running the python code:
 ```bash
 python3 main.py
+```
+
+
+- Running the streamit app code:
+```bash
+streamlit run app.py
 ```
 
 ### Steps to run the python code withing a Docker container
